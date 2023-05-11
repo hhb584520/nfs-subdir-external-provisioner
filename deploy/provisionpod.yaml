@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-client-provisioner
+spec:
+  serviceAccountName: nfs-client-provisioner
+  containers:
+    - name: nfs-client-provisioner
+      image: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+      volumeMounts:
+        - name: nfs-client-root
+          mountPath: /persistentvolumes
+      env:
+        - name: PROVISIONER_NAME
+          value: k8s-sigs.io/nfs-subdir-external-provisioner
+        - name: NFS_SERVER
+          value: 10.239.241.194
+        - name: NFS_PATH
+          value: /root/nfstorage
+  volumes:
+    - name: nfs-client-root
+      nfs:
+        server: 10.239.241.194
+        path: /root/nfstorage

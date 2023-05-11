@@ -1,7 +1,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: test-pod
+  name: test-pod1
 spec:
   containers:
   - name: test-pod
@@ -10,7 +10,7 @@ spec:
       - "/bin/sh"
     args:
       - "-c"
-      - "touch /mnt/SUCCESS && exit 0 || exit 1"
+      - "while true; do sleep 120; done;"
     volumeMounts:
       - name: nfs-pvc
         mountPath: "/mnt"
@@ -18,4 +18,4 @@ spec:
   volumes:
     - name: nfs-pvc
       persistentVolumeClaim:
-        claimName: test-claim
+        claimName: test-claim1
